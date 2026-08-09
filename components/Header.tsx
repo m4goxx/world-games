@@ -1,135 +1,208 @@
 'use client';
-
 import { useState, useEffect } from 'react';
 import { Menu, X, MessageCircle } from 'lucide-react';
 
 const WA_LINK = 'https://wa.me/5564992628827?text=Ol%C3%A1!%20Vi%20o%20site%20da%20World%20Imports%20e%20gostaria%20de%20consultar%20os%20produtos%20dispon%C3%ADveis.';
 
-const links = [
-  { label: 'Início',      href: '#inicio' },
-  { label: 'Celulares',   href: '#categorias' },
-  { label: 'Games',       href: '#categorias' },
-  { label: 'Sobre',       href: '#destaque' },
+const navLinks = [
+  { label: 'Início', href: '#inicio' },
+  { label: 'Celulares', href: '#categorias' },
+  { label: 'Games', href: '#categorias' },
+  { label: 'Sobre', href: '#sobre' },
   { label: 'Avaliações', href: '#avaliacoes' },
-  { label: 'Contato',     href: '#contato' },
+  { label: 'Contato', href: '#contato' },
 ];
 
 export default function Header() {
-  const [scrolled, setScrolled]   = useState(false);
-  const [menuOpen, setMenuOpen]   = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 48);
-    window.addEventListener('scroll', onScroll, { passive: true });
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? 'py-3 bg-black/80 backdrop-blur-md border-b border-white/5'
-          : 'py-5 bg-transparent'
-      }`}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 50,
+        transition: 'all 0.4s ease',
+        height: scrolled ? '64px' : '80px',
+        background: scrolled ? 'rgba(8,8,8,0.92)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(12px)' : 'none',
+        borderBottom: scrolled ? '1px solid rgba(255,255,255,0.06)' : '1px solid transparent',
+      }}
     >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+      <div style={{
+        maxWidth: '1280px',
+        margin: '0 auto',
+        padding: '0 24px',
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      }}>
         {/* Logo */}
-        <a href="#inicio" className="flex flex-col leading-none group">
-          <span
-            className="font-display font-900 text-xl tracking-widest uppercase text-white group-hover:text-metallic transition-all duration-300"
-            style={{ fontFamily: 'var(--font-display)', fontWeight: 900, letterSpacing: '0.2em' }}
-          >
-            WORLD IMPORTS
-          </span>
-          <span
-            className="text-xs tracking-[0.35em] uppercase"
-            style={{ color: 'var(--color-gray)', fontFamily: 'var(--font-body)', letterSpacing: '0.35em' }}
-          >
-            CELULARES &amp; GAMES
-          </span>
+        <a href="#inicio" style={{ textDecoration: 'none' }}>
+          <div>
+            <div style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: '22px',
+              fontWeight: 800,
+              letterSpacing: '0.08em',
+              color: '#F0F0F0',
+              lineHeight: 1,
+            }}>WORLD IMPORTS</div>
+            <div style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: '10px',
+              fontWeight: 400,
+              letterSpacing: '0.3em',
+              color: '#8A8A8A',
+              textTransform: 'uppercase',
+              marginTop: '2px',
+            }}>CELULARES &amp; GAMES</div>
+          </div>
         </a>
 
-        {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-8">
-          {links.map(l => (
+        {/* Desktop Nav */}
+        <nav style={{ display: 'flex', alignItems: 'center', gap: '32px' }} className="hidden-mobile">
+          {navLinks.map((link) => (
             <a
-              key={l.label}
-              href={l.href}
-              className="text-sm tracking-widest uppercase transition-colors duration-200"
-              style={{ color: 'var(--color-gray)', fontFamily: 'var(--font-body)', letterSpacing: '0.12em' }}
-              onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-white)')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'var(--color-gray)')}
+              key={link.label}
+              href={link.href}
+              style={{
+                fontFamily: 'var(--font-body)',
+                fontSize: '13px',
+                fontWeight: 500,
+                letterSpacing: '0.06em',
+                color: '#8A8A8A',
+                textDecoration: 'none',
+                textTransform: 'uppercase',
+                transition: 'color 0.2s ease',
+              }}
+              onMouseEnter={e => (e.currentTarget.style.color = '#F0F0F0')}
+              onMouseLeave={e => (e.currentTarget.style.color = '#8A8A8A')}
             >
-              {l.label}
+              {link.label}
             </a>
           ))}
-        </nav>
-
-        {/* CTA + hamburger */}
-        <div className="flex items-center gap-4">
           <a
             href={WA_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden md:flex items-center gap-2 px-5 py-2.5 text-xs tracking-widest uppercase metallic-hover transition-all duration-300"
             style={{
-              border: '1px solid var(--color-silver)',
-              color: 'var(--color-white)',
               fontFamily: 'var(--font-body)',
-              letterSpacing: '0.12em',
-              background: 'linear-gradient(135deg, rgba(192,192,192,0.08) 0%, rgba(192,192,192,0.02) 100%)'
+              fontSize: '12px',
+              fontWeight: 600,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              color: '#080808',
+              background: 'linear-gradient(135deg, #C0C0C0 0%, #E8E8E8 50%, #A8A8A8 100%)',
+              padding: '10px 20px',
+              textDecoration: 'none',
+              transition: 'all 0.2s ease',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
             }}
+            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 4px 20px rgba(192,192,192,0.2)'; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
           >
             <MessageCircle size={14} />
-            Falar no WhatsApp
+            FALAR NO WHATSAPP
           </a>
+        </nav>
 
-          <button
-            className="lg:hidden p-2"
-            style={{ color: 'var(--color-white)' }}
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Menu"
-          >
-            {menuOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
-        </div>
+        {/* Mobile hamburger */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="show-mobile"
+          style={{
+            background: 'none',
+            border: 'none',
+            color: '#F0F0F0',
+            cursor: 'pointer',
+            padding: '4px',
+          }}
+        >
+          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
 
-      {/* Mobile menu */}
-      <div
-        className={`lg:hidden overflow-hidden transition-all duration-400 ${
-          menuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-        }`}
-        style={{ background: 'rgba(8,8,8,0.97)', backdropFilter: 'blur(16px)' }}
-      >
-        <nav className="px-6 py-6 flex flex-col gap-5">
-          {links.map(l => (
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div style={{
+          position: 'absolute',
+          top: '100%',
+          left: 0,
+          right: 0,
+          background: 'rgba(8,8,8,0.98)',
+          backdropFilter: 'blur(12px)',
+          borderBottom: '1px solid rgba(255,255,255,0.06)',
+          padding: '24px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '20px',
+        }}>
+          {navLinks.map((link) => (
             <a
-              key={l.label}
-              href={l.href}
+              key={link.label}
+              href={link.href}
               onClick={() => setMenuOpen(false)}
-              className="text-sm tracking-widest uppercase"
-              style={{ color: 'var(--color-gray)', fontFamily: 'var(--font-body)' }}
+              style={{
+                fontFamily: 'var(--font-body)',
+                fontSize: '15px',
+                fontWeight: 500,
+                letterSpacing: '0.06em',
+                color: '#C0C0C0',
+                textDecoration: 'none',
+                textTransform: 'uppercase',
+              }}
             >
-              {l.label}
+              {link.label}
             </a>
           ))}
           <a
             href={WA_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 px-5 py-3 text-xs tracking-widest uppercase mt-2"
             style={{
-              border: '1px solid var(--color-silver)',
-              color: 'var(--color-white)',
-              fontFamily: 'var(--font-body)'
+              fontFamily: 'var(--font-body)',
+              fontSize: '13px',
+              fontWeight: 600,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              color: '#080808',
+              background: 'linear-gradient(135deg, #C0C0C0 0%, #E8E8E8 50%, #A8A8A8 100%)',
+              padding: '14px 20px',
+              textDecoration: 'none',
+              textAlign: 'center',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
             }}
           >
-            <MessageCircle size={14} />
-            Falar no WhatsApp
+            <MessageCircle size={16} />
+            FALAR NO WHATSAPP
           </a>
-        </nav>
-      </div>
+        </div>
+      )}
+
+      <style>{`
+        .hidden-mobile { display: flex; }
+        .show-mobile { display: none; }
+        @media (max-width: 768px) {
+          .hidden-mobile { display: none !important; }
+          .show-mobile { display: block !important; }
+        }
+      `}</style>
     </header>
   );
 }

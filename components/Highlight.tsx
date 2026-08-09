@@ -1,160 +1,127 @@
 'use client';
-
-import { useEffect, useRef } from 'react';
 import { MessageCircle } from 'lucide-react';
 
-const WA_LINK = 'https://wa.me/5564992628827?text=Ol%C3%A1!%20Vi%20o%20site%20da%20World%20Imports%20e%20gostaria%20de%20falar%20com%20um%20especialista.';
+const WA_LINK = 'https://wa.me/5564992628827?text=Ol%C3%A1!%20Vi%20o%20site%20da%20World%20Imports%20e%20gostaria%20de%20consultar%20os%20produtos%20dispon%C3%ADveis.';
 
 export default function Highlight() {
-  const ref = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      entries => entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.querySelectorAll('.reveal').forEach((el, i) => {
-            setTimeout(() => el.classList.add('visible'), i * 150);
-          });
-          observer.unobserve(e.target);
-        }
-      }),
-      { threshold: 0.2 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section
-      id="destaque"
-      ref={ref}
-      className="py-28 px-6 overflow-hidden"
-      style={{ background: 'var(--color-black)' }}
-    >
-      <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-
-          {/* Left: visual */}
-          <div className="reveal relative">
-            <div
-              className="w-full aspect-square max-w-lg mx-auto relative"
-              style={{
-                background: 'linear-gradient(145deg, #1C1C1C 0%, #111111 100%)',
-                border: '1px solid var(--color-border)'
-              }}
-            >
-              {/* Glow */}
-              <div
-                className="absolute inset-0 opacity-10"
-                style={{ background: 'radial-gradient(ellipse at 30% 30%, #C0C0C0, transparent 60%)' }}
-              />
-              {/* Abstract tech shapes */}
-              <div className="absolute inset-8 flex flex-col gap-4 justify-center">
-                {[...Array(5)].map((_, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      height: '1px',
-                      background: `linear-gradient(90deg, transparent, rgba(192,192,192,${0.05 + i * 0.04}), transparent)`,
-                      width: `${60 + i * 8}%`
-                    }}
-                  />
-                ))}
-                <div className="flex items-center gap-4 mt-4">
-                  <div
-                    style={{
-                      width: '60px',
-                      height: '60px',
-                      border: '1px solid rgba(192,192,192,0.2)',
-                      borderRadius: '2px',
-                      background: 'rgba(192,192,192,0.04)'
-                    }}
-                  />
-                  <div className="flex flex-col gap-2">
-                    <div style={{ width: '120px', height: '1px', background: 'rgba(192,192,192,0.15)' }} />
-                    <div style={{ width: '80px', height: '1px', background: 'rgba(192,192,192,0.08)' }} />
-                  </div>
-                </div>
-                {[...Array(3)].map((_, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      height: '1px',
-                      background: `linear-gradient(90deg, transparent, rgba(192,192,192,${0.08 - i * 0.02}), transparent)`,
-                      width: `${80 - i * 15}%`
-                    }}
-                  />
-                ))}
-              </div>
-              {/* Label */}
-              <div
-                className="absolute bottom-4 right-4 text-xs tracking-widest"
-                style={{ color: 'rgba(192,192,192,0.25)', fontFamily: 'var(--font-body)', fontSize: '0.6rem' }}
-              >
-                WORLD IMPORTS — CATALÃO GO
-              </div>
-            </div>
-          </div>
-
-          {/* Right: copy */}
-          <div className="flex flex-col gap-8">
-            <p
-              className="reveal text-xs tracking-[0.4em] uppercase"
-              style={{ color: 'var(--color-silver)', fontFamily: 'var(--font-body)' }}
-            >
-              SOBRE NÓS
-            </p>
-
-            <h2
-              className="reveal"
-              style={{
+    <section id="sobre" className="section-fade" style={{
+      background: '#111111',
+      padding: '120px 24px',
+    }}>
+      <div style={{
+        maxWidth: '1280px', margin: '0 auto',
+        display: 'grid', gridTemplateColumns: '1fr 1fr',
+        gap: '80px', alignItems: 'center',
+      }} className="highlight-grid">
+        {/* Left visual */}
+        <div style={{ position: 'relative' }}>
+          <div style={{
+            aspectRatio: '4/5',
+            background: 'linear-gradient(160deg, #1C1C1C 0%, #111111 100%)',
+            border: '1px solid #2A2A2A',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            position: 'relative', overflow: 'hidden',
+          }}>
+            {/* Metallic shimmer */}
+            <div style={{
+              position: 'absolute', top: 0, left: 0, right: 0, height: '2px',
+              background: 'linear-gradient(90deg, transparent, #C0C0C0, transparent)',
+            }} />
+            <div style={{
+              position: 'absolute', inset: 0, opacity: 0.03,
+              backgroundImage: `linear-gradient(rgba(192,192,192,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(192,192,192,0.8) 1px, transparent 1px)`,
+              backgroundSize: '40px 40px',
+            }} />
+            <div style={{ textAlign: 'center', padding: '40px' }}>
+              <div style={{
                 fontFamily: 'var(--font-display)',
-                fontWeight: 900,
-                fontSize: 'clamp(2rem, 4.5vw, 3.5rem)',
-                textTransform: 'uppercase',
-                lineHeight: 1.05,
-                color: 'var(--color-white)'
-              }}
-            >
-              SEU PRÓXIMO{' '}
-              <span className="text-metallic">DISPOSITIVO</span>{' '}
-              COMEÇA AQUI.
-            </h2>
-
-            <p
-              className="reveal max-w-lg"
-              style={{
-                color: 'var(--color-gray)',
-                fontFamily: 'var(--font-body)',
-                lineHeight: 1.8,
-                fontSize: '1rem'
-              }}
-            >
-              Na World Imports, você encontra uma experiência de compra focada
-              em atendimento, praticidade e tecnologia. Venha nos visitar em
-              Catalão e descubra o produto ideal para você.
-            </p>
-
-            <div className="reveal">
-              <a
-                href={WA_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="metallic-hover inline-flex items-center gap-2.5 px-8 py-4 text-sm tracking-widest uppercase transition-all duration-300 hover:-translate-y-0.5"
-                style={{
-                  border: '1px solid var(--color-silver)',
-                  color: 'var(--color-white)',
-                  fontFamily: 'var(--font-body)',
-                  letterSpacing: '0.12em'
-                }}
-              >
-                <MessageCircle size={15} />
-                Falar com um Especialista
-              </a>
+                fontSize: '120px', fontWeight: 900, lineHeight: 1,
+                background: 'linear-gradient(135deg, #1C1C1C 0%, #2A2A2A 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                userSelect: 'none',
+              }}>WI</div>
+              <div style={{
+                fontFamily: 'var(--font-body)', fontSize: '11px',
+                letterSpacing: '0.4em', color: '#2A2A2A', textTransform: 'uppercase',
+                marginTop: '8px',
+              }}>WORLD IMPORTS</div>
             </div>
           </div>
+
+          {/* Accent line */}
+          <div style={{
+            position: 'absolute', bottom: '-24px', left: '32px',
+            width: '80px', height: '2px',
+            background: 'linear-gradient(90deg, #C0C0C0, transparent)',
+          }} />
+        </div>
+
+        {/* Right content */}
+        <div>
+          <div style={{
+            fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 500,
+            letterSpacing: '0.3em', color: '#8A8A8A', textTransform: 'uppercase',
+            marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '12px',
+          }}>
+            <div style={{ width: '32px', height: '1px', background: '#2A2A2A' }} />
+            SOBRE NÓS
+          </div>
+
+          <h2 style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: 'clamp(36px, 4vw, 56px)',
+            fontWeight: 900, lineHeight: 1,
+            letterSpacing: '-0.02em', textTransform: 'uppercase',
+            color: '#F0F0F0', marginBottom: '28px',
+          }}>
+            SEU PRÓXIMO<br />
+            <span style={{
+              background: 'linear-gradient(135deg, #C0C0C0 0%, #E8E8E8 50%, #A0A0A0 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}>DISPOSITIVO</span><br />
+            COMEÇA AQUI.
+          </h2>
+
+          <p style={{
+            fontFamily: 'var(--font-body)', fontSize: '16px', color: '#8A8A8A',
+            lineHeight: 1.8, marginBottom: '40px',
+          }}>
+            Na World Imports, você encontra uma experiência de compra
+            focada em atendimento, praticidade e tecnologia.
+          </p>
+
+          <a
+            href={WA_LINK}
+            target="_blank" rel="noopener noreferrer"
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: '10px',
+              background: 'linear-gradient(135deg, #C0C0C0 0%, #E8E8E8 50%, #A8A8A8 100%)',
+              color: '#080808', padding: '16px 28px',
+              fontFamily: 'var(--font-body)', fontSize: '13px', fontWeight: 700,
+              letterSpacing: '0.1em', textTransform: 'uppercase',
+              textDecoration: 'none',
+              transition: 'all 0.25s ease',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(192,192,192,0.2)'; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
+          >
+            <MessageCircle size={16} />
+            FALAR COM UM ESPECIALISTA
+          </a>
         </div>
       </div>
+
+      <style>{`
+        .highlight-grid { grid-template-columns: 1fr 1fr; }
+        @media (max-width: 768px) {
+          .highlight-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
+        }
+      `}</style>
     </section>
   );
 }
