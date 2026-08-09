@@ -1,1 +1,1 @@
-# world-games
+# World Imports — Celulares & Games\n\nSite institucional premium desenvolvido em Next.js 14.\n
