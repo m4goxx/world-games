@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-
 const steps = [
   { num: '01', title: 'CONSULTE', desc: 'Fale conosco pelo WhatsApp e consulte os produtos disponíveis.' },
   { num: '02', title: 'ESCOLHA', desc: 'Encontre o produto que atende às suas necessidades.' },
@@ -10,161 +8,101 @@ const steps = [
 ];
 
 export default function HowToBuy() {
-  const ref = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      entries => entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.querySelectorAll('[data-step]').forEach((el, i) => {
-            setTimeout(() => el.classList.add('visible'), i * 120);
-          });
-          observer.unobserve(e.target);
-        }
-      }),
-      { threshold: 0.15 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section
-      ref={ref}
-      className="py-28 px-6"
-      style={{ background: 'var(--color-carbon)' }}
-    >
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-16 text-center">
-          <p
-            className="text-xs tracking-[0.4em] uppercase mb-4"
-            style={{ color: 'var(--color-silver)', fontFamily: 'var(--font-body)' }}
-          >
-            PROCESSO
-          </p>
-          <h2
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontWeight: 900,
-              fontSize: 'clamp(2rem, 5vw, 3.5rem)',
-              textTransform: 'uppercase',
-              color: 'var(--color-white)'
-            }}
-          >
-            SIMPLES.{' '}
-            <span className="text-metallic">RÁPIDO.</span>{' '}
-            DIRETO.
+    <section className="section-fade" style={{
+      background: '#111111',
+      padding: '120px 24px',
+      position: 'relative',
+      overflow: 'hidden',
+    }}>
+      <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+        <div style={{ marginBottom: '80px' }}>
+          <div style={{
+            fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 500,
+            letterSpacing: '0.3em', color: '#8A8A8A', textTransform: 'uppercase',
+            marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '12px',
+          }}>
+            <div style={{ width: '32px', height: '1px', background: '#2A2A2A' }} />
+            COMO COMPRAR
+          </div>
+          <h2 style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: 'clamp(40px, 5vw, 64px)',
+            fontWeight: 900, lineHeight: 1,
+            letterSpacing: '-0.02em', textTransform: 'uppercase',
+            color: '#F0F0F0',
+          }}>
+            SIMPLES. RÁPIDO.<br />
+            <span style={{
+              background: 'linear-gradient(135deg, #C0C0C0 0%, #E8E8E8 50%, #A0A0A0 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}>DIRETO.</span>
           </h2>
         </div>
 
-        {/* Desktop: horizontal timeline */}
-        <div className="hidden lg:flex items-start gap-0">
-          {steps.map((step, i) => (
-            <div
-              key={step.num}
-              data-step
-              className="reveal flex-1 flex flex-col gap-4 p-8 relative"
-              style={{
-                borderTop: '1px solid var(--color-border)'
-              }}
-            >
-              {/* Top line accent */}
-              <div
-                className="absolute top-0 left-0 h-px w-0 transition-all duration-700"
-                style={{ background: 'var(--color-silver)', transitionDelay: `${i * 120 + 300}ms` }}
-              />
-              <span
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontWeight: 900,
-                  fontSize: '3.5rem',
-                  lineHeight: 1,
-                  color: 'rgba(192,192,192,0.12)'
+        <div style={{ position: 'relative' }}>
+          <div className="step-line" style={{
+            position: 'absolute', top: '28px', left: '0', right: '0', height: '1px',
+            background: 'linear-gradient(90deg, transparent, #2A2A2A 10%, #2A2A2A 90%, transparent)',
+          }} />
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: '0',
+          }} className="steps-grid">
+            {steps.map((step) => (
+              <div key={step.num} style={{ padding: '0 32px 0 0', position: 'relative' }}>
+                <div style={{
+                  width: '56px', height: '56px',
+                  border: '1px solid #2A2A2A',
+                  background: '#111111',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  marginBottom: '32px',
+                  position: 'relative', zIndex: 1,
+                  transition: 'all 0.3s ease',
                 }}
-              >
-                {step.num}
-              </span>
-              <h3
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontWeight: 700,
-                  fontSize: '1.3rem',
-                  letterSpacing: '0.08em',
-                  color: 'var(--color-white)'
-                }}
-              >
-                {step.title}
-              </h3>
-              <p
-                style={{
-                  color: 'var(--color-gray)',
-                  fontFamily: 'var(--font-body)',
-                  fontSize: '0.88rem',
-                  lineHeight: 1.7
-                }}
-              >
-                {step.desc}
-              </p>
-              {i < steps.length - 1 && (
-                <div
-                  className="absolute top-0 right-0 h-full w-px"
-                  style={{ background: 'var(--color-border)' }}
-                />
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* Mobile: vertical */}
-        <div className="flex lg:hidden flex-col">
-          {steps.map((step, i) => (
-            <div
-              key={step.num}
-              data-step
-              className="reveal flex gap-6 py-8"
-              style={{
-                borderBottom: i < steps.length - 1 ? '1px solid var(--color-border)' : 'none'
-              }}
-            >
-              <span
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontWeight: 900,
-                  fontSize: '2.5rem',
-                  lineHeight: 1,
-                  color: 'rgba(192,192,192,0.15)',
-                  minWidth: '60px'
-                }}
-              >
-                {step.num}
-              </span>
-              <div className="flex flex-col gap-2">
-                <h3
-                  style={{
-                    fontFamily: 'var(--font-display)',
-                    fontWeight: 700,
-                    fontSize: '1.2rem',
-                    letterSpacing: '0.08em',
-                    color: 'var(--color-white)'
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLElement).style.borderColor = '#C0C0C0';
+                    (e.currentTarget as HTMLElement).style.background = '#1C1C1C';
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLElement).style.borderColor = '#2A2A2A';
+                    (e.currentTarget as HTMLElement).style.background = '#111111';
                   }}
                 >
-                  {step.title}
-                </h3>
-                <p
-                  style={{
-                    color: 'var(--color-gray)',
-                    fontFamily: 'var(--font-body)',
-                    fontSize: '0.88rem',
-                    lineHeight: 1.7
-                  }}
-                >
-                  {step.desc}
-                </p>
+                  <span style={{
+                    fontFamily: 'var(--font-display)', fontSize: '16px', fontWeight: 800,
+                    background: 'linear-gradient(135deg, #C0C0C0 0%, #E8E8E8 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                  }}>{step.num}</span>
+                </div>
+                <h3 style={{
+                  fontFamily: 'var(--font-display)', fontSize: '24px', fontWeight: 800,
+                  letterSpacing: '0.06em', textTransform: 'uppercase',
+                  color: '#F0F0F0', marginBottom: '12px',
+                }}>{step.title}</h3>
+                <p style={{
+                  fontFamily: 'var(--font-body)', fontSize: '14px',
+                  color: '#8A8A8A', lineHeight: 1.7,
+                }}>{step.desc}</p>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
+
+      <style>{`
+        .steps-grid { grid-template-columns: repeat(4, 1fr) !important; }
+        .step-line { display: block; }
+        @media (max-width: 768px) {
+          .steps-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
+          .step-line { display: none !important; }
+        }
+      `}</style>
     </section>
   );
 }
